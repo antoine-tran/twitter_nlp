@@ -200,11 +200,11 @@ while line:
                     maxP = p
             maxL2muc = muc()
             if maxL != 'None':
-                if maxL in maxL2muc:
-                    tags[features.entities[i][0]] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL2muc[maxL])
+                # if maxL in maxL2muc:
+                tags[features.entities[i][0]] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL2muc[maxL])
                 for j in range(features.entities[i][0]+1,features.entities[i][1]):
-                    if maxL in maxL2muc:
-                        tags[j] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL2muc[maxL])
+                    # if maxL in maxL2muc:
+                    tags[j] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL2muc[maxL])
             else:
                 tags[features.entities[i][0]] = "O"
                 for j in range(features.entities[i][0]+1,features.entities[i][1]):
