@@ -1,0 +1,13 @@
+person PERSON
+geo-loc LOCATION
+movie MISC
+company ORGANIZATION
+tvshow MISC
+product MISC
+sportsteam ORGANIZATION
+other MISC
+facility ORGANIZATION
+product PRODUCT
+other MISC
+NONE MISC
+band ORGANIZATION

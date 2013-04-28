@@ -48,6 +48,14 @@ def GetLLda():
                            stdin=subprocess.PIPE,
                            stdout=subprocess.PIPE)
 
+# a conversion from name entity types to MUC types (PERSON, ORGANIZATION, LOCATION, MISC)
+def muc():
+    d = {}
+    for line in open('%s/hbc/data/type2muc' % (BASE_DIR)):
+        (netype, muc) = line.rstrip('\n').split(' ')
+        d[netype] = muc
+    return d
+
 #if platform.architecture() != ('64bit', 'ELF'):
 #    sys.exit("Requires 64 bit Linux")
 
@@ -190,11 +198,13 @@ while line:
                 if p > maxP or maxL == None:
                     maxL = label
                     maxP = p
-
+            maxL2muc = muc()
             if maxL != 'None':
-                tags[features.entities[i][0]] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL)
+                if maxL in maxL2muc:
+                    tags[features.entities[i][0]] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL2muc[maxL])
                 for j in range(features.entities[i][0]+1,features.entities[i][1]):
-                    tags[j] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL)
+                    if maxL in maxL2muc:
+                        tags[j] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL2muc[maxL])
             else:
                 tags[features.entities[i][0]] = "O"
                 for j in range(features.entities[i][0]+1,features.entities[i][1]):
