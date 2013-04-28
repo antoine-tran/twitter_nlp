@@ -192,17 +192,17 @@ while line:
                     maxP = p
 
             if maxL != 'None':
-                tags[features.entities[i][0]] = "B\t%s\t--NME--\t%s" % (wordsfeatures.entities[i][0], maxL)
+                tags[features.entities[i][0]] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL)
                 for j in range(features.entities[i][0]+1,features.entities[i][1]):
-                    tags[j] = "B\t%s\t--NME--\t%s" % (wordsfeatures.entities[i][0], maxL)
+                    tags[j] = "B\t%s\t--NME--\t%s" % (words[features.entities[i][0]], maxL)
             else:
                 tags[features.entities[i][0]] = "O"
                 for j in range(features.entities[i][0]+1,features.entities[i][1]):
                     tags[j] = "O"
         else:
-            tags[features.entities[i][0]] = "B"
+            tags[features.entities[i][0]] = "B\t%s\t--NME--\tMISC" % (words[features.entities[i][0]])
             for j in range(features.entities[i][0]+1,features.entities[i][1]):
-                tags[j] = "I"
+                tags[j] = "I\t%s\t--NME--\tMISC" % (words[features.entities[i][0]])
 
     output = ["%s\t%s\n" % (words[x], tags[x]) for x in range(len(words))]
     if pos:
